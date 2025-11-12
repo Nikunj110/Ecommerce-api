@@ -1,0 +1,22 @@
+{
+  "name": "ecommerce-api",
+  "version": "1.0.0",
+  "description": "The backend API for a full-featured e-commerce store ,A RESTful API for an e-commerce project built with Node.js, Express, and MongoDB ,Node.js E-commerce API handling users, products, orders, and payments.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nikunj110/Ecommerce-api.git"
+  },
+  "author": "Nikunj Gajera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nikunj110/Ecommerce-api/issues"
+  },
+  "homepage": "https://github.com/Nikunj110/Ecommerce-api#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
