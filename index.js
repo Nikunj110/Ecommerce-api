@@ -1,5 +1,6 @@
 import express from 'express';
-import productRouter from './src/routes/products.routes.js'
+import productRouter from './src/route/products.route.js'
+import authRouter from './src/route/auth.route.js'
 import dotenv from 'dotenv'
 import connectDB from './src/config/db.js';
 dotenv.config();
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json())
 
 app.use('/api/v1/products', productRouter);
+app.use('/api/v1/auth',authRouter)
 
 app.get('/', (req, res) => {
   res.send('E-commerce API is running!');
