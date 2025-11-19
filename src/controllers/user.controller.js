@@ -1,5 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 
 const registerUser = async (req, res) => {
@@ -7,7 +9,7 @@ const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-      return  res.status(400).json({
+      return res.status(400).json({
         message: 'Please provide name, email, and password'
       })
     }
@@ -25,6 +27,7 @@ const registerUser = async (req, res) => {
     });
 
 
+
     const userResponse = {
       _id: newUser._id,
       name: newUser.name,
@@ -32,8 +35,20 @@ const registerUser = async (req, res) => {
       role: newUser.role,
       createdAt: newUser.createdAt,
     }
-
-    return res.status(201).json(userResponse);
+    const token = jwt.sign({
+      userId: newUser._id,
+      role: newUser.role,
+    },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: '1h'
+      }
+    )
+    return res.status(201).json({
+      message: 'User registered successfully',
+      user: userResponse,
+      token: token
+    });
 
   } catch (error) {
 
@@ -67,7 +82,7 @@ const loginUser = async (req, res) => {
     })
 
     if (!findUser) {
-     return res.status(404).json({
+      return res.status(404).json({
         message: 'User Not Found Register First',
 
       })
@@ -79,6 +94,15 @@ const loginUser = async (req, res) => {
         message: 'Incorrect Password'
       });
     }
+    const token = jwt.sign({
+      userId: findUser._id,
+      role: findUser.role,
+    },
+      process.env.JWT_SECRET_KEY,
+      {
+        expiresIn: '1h'
+      }
+    )
 
     return res.status(200).json({
       message: 'You logged in successfully',
@@ -87,11 +111,12 @@ const loginUser = async (req, res) => {
         name: findUser.name,
         email: findUser.email,
       },
+      token
     })
 
   } catch (error) {
     if (error.name === 'ValidationError') {
-     return res.status(400).json({
+      return res.status(400).json({
         message: 'Enter All the data ',
         error: error.message,
       })

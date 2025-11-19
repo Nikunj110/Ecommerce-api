@@ -1,6 +1,6 @@
 import express from 'express';
-import productRouter from './src/route/products.route.js'
-import authRouter from './src/route/auth.route.js'
+import productRouter from './src/routes/products.route.js'
+import authRouter from './src/routes/auth.route.js'
 import dotenv from 'dotenv'
 import connectDB from './src/config/db.js';
 dotenv.config();
