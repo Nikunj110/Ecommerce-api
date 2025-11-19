@@ -9,7 +9,7 @@ const registerUser = async (req, res) => {
         message: 'Please provide name, email, and password'
       })
     }
-    const existingUser = User.findOne({ email });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(409).json({
@@ -22,11 +22,6 @@ const registerUser = async (req, res) => {
       password
     });
 
-    if (!savedUser) {
-      return res.status(500).json({
-        message: 'Error Occured In Save User '
-      })
-    }
 
     const userResponse = {
       _id: newUser._id,
