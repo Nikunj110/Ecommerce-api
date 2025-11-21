@@ -103,7 +103,7 @@ const loginUser = async (req, res) => {
         expiresIn: '1h'
       }
     )
-
+    console.log(token);
     return res.status(200).json({
       message: 'You logged in successfully',
       user: {
