@@ -9,13 +9,17 @@ import {
   
 } from '../controllers/product.controller.js';
 
+import authenticateUser from '../middlewares/auth.middleware.js'
+import authorizeAdmin from '../middlewares/admin.middleware.js'
+
 const router = express.Router();
 
 router.get('/', getAllProducts);
-
-router.post('/', createProduct);
 router.get('/:id', getProduct);
-router.patch('/:id', updateProduct);
-router.delete('/:id',deleteProduct)
+
+
+router.post('/', authenticateUser,authorizeAdmin,createProduct);
+router.patch('/:id', authenticateUser,authorizeAdmin,updateProduct);
+router.delete('/:id',authenticateUser,authorizeAdmin,deleteProduct)
 
 export default router;

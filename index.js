@@ -3,7 +3,7 @@ import productRouter from './src/routes/products.route.js'
 import authRouter from './src/routes/auth.route.js'
 import dotenv from 'dotenv'
 import connectDB from './src/config/db.js';
-import {authenticateUser} from './src/middlewares/auth.middleware.js'
+// import {authenticateUser} from './src/middlewares/auth.middleware.js'
 dotenv.config();
 
 const app = express();
@@ -13,7 +13,7 @@ app.use(express.json())
 
 app.use('/api/v1/auth', authRouter)
 
-app.use('/api/v1/products', authenticateUser, productRouter);
+app.use('/api/v1/products', productRouter);
 
 app.get('/', (req, res) => {
   res.send('E-commerce API is running!');
