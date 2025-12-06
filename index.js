@@ -1,6 +1,7 @@
 import express from 'express';
 import productRouter from './src/routes/products.route.js'
 import authRouter from './src/routes/auth.route.js'
+import orderRouter from './src/routes/order.route.js'
 import dotenv from 'dotenv'
 import connectDB from './src/config/db.js';
 // import {authenticateUser} from './src/middlewares/auth.middleware.js'
@@ -14,6 +15,8 @@ app.use(express.json())
 app.use('/api/v1/auth', authRouter)
 
 app.use('/api/v1/products', productRouter);
+
+app.use('/api/v1/addOrder',orderRouter);
 
 app.get('/', (req, res) => {
   res.send('E-commerce API is running!');
