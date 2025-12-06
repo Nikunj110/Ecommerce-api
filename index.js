@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 import connectDB from './src/config/db.js';
 // import {authenticateUser} from './src/middlewares/auth.middleware.js'
 dotenv.config();
-
+  
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -16,7 +16,7 @@ app.use('/api/v1/auth', authRouter)
 
 app.use('/api/v1/products', productRouter);
 
-app.use('/api/v1/addOrder',orderRouter);
+app.use('/api/v1/orders', orderRouter);
 
 app.get('/', (req, res) => {
   res.send('E-commerce API is running!');
