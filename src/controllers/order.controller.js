@@ -18,7 +18,7 @@ const addOrderItems = async (req, res) => {
 
     const order = new Order({
       orderItems,
-      user: req.user._id, // <--- This links the order to the logged-in user
+      user: req.user.userId, // <--- This links the order to the logged-in user
       shippingAddress,
       paymentMethod,
       itemsPrice,
