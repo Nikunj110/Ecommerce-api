@@ -9,7 +9,7 @@ import {
   
 } from '../controllers/product.controller.js';
 
-import authenticateUser from '../middlewares/auth.middleware.js'
+import {authenticateUser} from '../middlewares/auth.middleware.js'
 import authorizeAdmin from '../middlewares/admin.middleware.js'
 
 const router = express.Router();

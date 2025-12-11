@@ -21,3 +21,4 @@ const authorizeAdmin = (req, res, next) => {
     })
   }
 }
+export default authorizeAdmin;
