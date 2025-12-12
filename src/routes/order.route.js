@@ -5,6 +5,6 @@ import {authenticateUser} from "../middlewares/auth.middleware.js"
 
 const router = express.Router();
 router.post('/', authenticateUser, addOrderItems);
-router.post('/myorders',authenticateUser,getMyOrders);
+router.get('/myorders',authenticateUser,getMyOrders);
 
 export default router;
