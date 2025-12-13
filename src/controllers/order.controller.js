@@ -70,7 +70,7 @@ const getOrderById = async (req, res) => {
 
     // If the logged-in user is NOT the owner AND NOT an admin, block them atyarej.
     // We convert IDs to strings to compare them safely.
-    if (order.user._id.toString() !== req.user._id && req.user.role !== 'admin') {
+    if (order.user.userId.toString() !== req.user.userId && req.user.role !== 'admin') {
       return res.status(403).json({
         message: 'Not authorized to view this order'
       })
