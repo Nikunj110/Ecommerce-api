@@ -56,4 +56,33 @@ const getMyOrders = async (req, res) => {
   }
 }
 
-export { addOrderItems,getMyOrders };
+const getOrderById = async (req, res) => {
+  try {
+    // 1. Find the order using the URL Parameter (req.params.id)
+    // 2. POPULATE: Go to the 'user' collection, grab 'name' and 'email'
+    // User Have Many Orders
+    const order = await Order.findById(req.params.id)
+      .populate('user', 'name email');
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    // If the logged-in user is NOT the owner AND NOT an admin, block them atyarej.
+    // We convert IDs to strings to compare them safely.
+    if (order.user._id.toString() !== req.user._id && req.user.role !== 'admin') {
+      return res.status(403).json({
+        message: 'Not authorized to view this order'
+      })
+    }
+
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error fetching order details',
+      error: error.message
+    });
+  }
+}
+
+export { addOrderItems, getMyOrders, getOrderById };
