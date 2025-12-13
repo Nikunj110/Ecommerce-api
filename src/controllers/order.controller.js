@@ -70,7 +70,7 @@ const getOrderById = async (req, res) => {
 
     // If the logged-in user is NOT the owner AND NOT an admin, block them atyarej.
     // We convert IDs to strings to compare them safely.
-    if (order.user.userId.toString() !== req.user.userId && req.user.role !== 'admin') {
+    if (order.user._id.toString() !== req.user.userId && req.user.role !== 'admin') {
       return res.status(403).json({
         message: 'Not authorized to view this order'
       })
@@ -85,4 +85,50 @@ const getOrderById = async (req, res) => {
   }
 }
 
-export { addOrderItems, getMyOrders, getOrderById };
+const updateOrderToPaid = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    if (order.user._id.toString() !== req.user.userId && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
+
+    // const paymetUpdate = await Order.updateMany({
+    //   isPaid: true,
+    //   paidAt: Date.now()
+    // })
+
+    // return res.status(200).json({
+    //   paymetUpdate
+    // });
+
+    // Update the Order Status
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    // Save the Payment Result (Simulating PayPal/Stripe)
+    // In a real app, this data comes from req.body (from PayPal)
+    order.paymentResult = {
+      id: req.body.id || 'PAY-SIMULATED-123',
+      status: req.body.status || 'COMPLETED',
+      update_time: req.body.update_time || Date.now(),
+      email_address: req.body.email_address || 'customer@example.com',
+    }
+    // Save the updated object
+    const updatedOrder = await order.save();
+
+    res.status(200).json(updatedOrder);
+
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error updating payment status',
+      error: error.message
+    });
+  }
+
+}
+
+export { addOrderItems, getMyOrders, getOrderById, updateOrderToPaid };
