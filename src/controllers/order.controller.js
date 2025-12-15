@@ -84,7 +84,7 @@ const getOrderById = async (req, res) => {
     });
   }
 }
- 
+
 const updateOrderToPaid = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -131,4 +131,19 @@ const updateOrderToPaid = async (req, res) => {
 
 }
 
-export { addOrderItems, getMyOrders, getOrderById, updateOrderToPaid };
+
+const getOrders = async (req, res) => {
+  try {
+
+    const orders =await Order.find({}).populate("user","id name");
+
+    res.status(200).json(orders);
+
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error fetching all orders',
+      error: error.message
+    });
+  }
+}
+export { addOrderItems, getMyOrders, getOrderById, updateOrderToPaid,getOrders };
