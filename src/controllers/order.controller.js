@@ -135,7 +135,7 @@ const updateOrderToPaid = async (req, res) => {
 const getOrders = async (req, res) => {
   try {
 
-    const orders =await Order.find({}).populate("user","id name");
+    const orders = await Order.find({}).populate("user", "id name");
 
     res.status(200).json(orders);
 
@@ -146,4 +146,29 @@ const getOrders = async (req, res) => {
     });
   }
 }
-export { addOrderItems, getMyOrders, getOrderById, updateOrderToPaid,getOrders };
+
+const updateOrderToDelivered = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      res.status(404).json({
+        message: 'Order not found'
+      })
+    }
+
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+
+    const updateOrder = order.save();
+    res.status(200).json(updateOrder)
+
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error updating delivery status',
+      error: error.message
+    });
+  }
+}
+
+export { addOrderItems, getMyOrders, getOrderById, updateOrderToPaid, getOrders ,updateOrderToDelivered};
