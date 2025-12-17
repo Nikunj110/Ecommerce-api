@@ -4,6 +4,7 @@ import authRouter from './src/routes/auth.route.js'
 import orderRouter from './src/routes/order.route.js'
 import dotenv from 'dotenv'
 import connectDB from './src/config/db.js';
+import path from 'path'
 import uploadRoutes from './src/routes/upload.routes.js'
 // import {authenticateUser} from './src/middlewares/auth.middleware.js'
 dotenv.config();
@@ -19,7 +20,7 @@ app.use('/api/v1/products', productRouter);
  
 app.use('/api/v1/orders', orderRouter);
 
-app.use('/api/v1/upload')
+app.use('/api/v1/upload',  uploadRoutes)
 
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
