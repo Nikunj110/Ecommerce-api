@@ -83,4 +83,3 @@ A professional, fully-featured RESTful API for an E-commerce platform built with
 
 ---
 
-## 📂 Project Structure
